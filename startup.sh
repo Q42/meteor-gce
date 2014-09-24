@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Change this to your GCS bucket name:
 export BUCKET='meteor'
 
 
@@ -15,11 +16,24 @@ echo 'deb http://nginx.org/packages/debian/ wheezy nginx' | tee /etc/apt/sources
 # Node.js (this script already runs apt-get update)
 curl -sL https://deb.nodesource.com/setup | bash -
 
-
+# Install packages
 apt-get install -y mongodb-10gen nodejs nginx
 npm install -g forever userdown
 
 
+# Mount mongo-data disk and configure MongoDB to use it
+mkdir /mongo-data
+/usr/share/google/safe_format_and_mount -m "mkfs.ext4 -F" /dev/sdb /mongo-data
+mkdir /mongo-data/mongodb
+chown mongodb:mongodb /mongo-data/mongodb
+echo 'dbpath=/mongo-data/mongodb
+logpath=/var/log/mongodb/mongodb.log
+logappend=true
+' | tee /etc/mongodb.conf
+/etc/init.d/mongodb restart
+
+
+# Configure nginx
 echo 'server {
     listen       80;
     server_name  localhost;
@@ -42,18 +56,20 @@ echo 'server {
     }
 }
 ' | tee /etc/nginx/conf.d/default.conf
-
 /etc/init.d/nginx restart
 
+
+# Get app code
 cd /opt
 gsutil cp gs://$BUCKET/versions/default.tar.gz .
 tar zxf default.tar.gz
 cd bundle
 (cd programs/server && npm install)
 
+
+# Run
 export MONGO_URL='mongodb://mongo'
 export ROOT_URL='http://localhost'
 export PORT=3000
-
 forever -c userdown --minUptime 2000 --spinSleepTime 1000 main.js
 
