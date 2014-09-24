@@ -68,7 +68,7 @@ cd bundle
 
 
 # Run
-export MONGO_URL='mongodb://mongo'
+export MONGO_URL='mongodb://localhost'
 export ROOT_URL='http://localhost'
 export PORT=3000
 forever -c userdown --minUptime 2000 --spinSleepTime 1000 main.js
