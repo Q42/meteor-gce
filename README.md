@@ -33,7 +33,7 @@ Install scripts to run Meteor on Google Compute Engine.
 10. Create a new persistent disk for MongoDB:  
     `gcloud compute disks create "mongo-data" --size "200" --zone "europe-west1-a" --type "pd-standard"`
 
-11. Create a compute engine instance (replace 'iloveq42' with your bucket name):  
+11. Create a compute engine instance using the startup.sh script (replace 'iloveq42' with your bucket name):  
     `gcloud compute instances create "meteor" --zone "europe-west1-a" --tags "http-server" --scopes storage-ro --metadata startup-script-url=gs://iloveq42/startup.sh --disk "name=mongo-data" "mode=rw" "boot=no"`
 
 This will output something like this:
@@ -41,4 +41,4 @@ This will output something like this:
     NAME   ZONE           MACHINE_TYPE  INTERNAL_IP   EXTERNAL_IP   STATUS
     meteor europe-west1-a n1-standard-1 10.240.134.93 130.211.62.68 RUNNING
 
-At this point your site should be reachable on the external IP (http://130.211.62.68 in this case).
+Done! At this point your site should be reachable on the external IP (http://130.211.62.68 in this case).
