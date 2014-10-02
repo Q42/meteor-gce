@@ -31,7 +31,7 @@ Install scripts to run Meteor on Google Compute Engine.
    `gsutil cp ../<YOUR_APP_NAME>.tar.gz gs://iloveq42/versions/default.tar.gz`
 
 10. Create a new persistent disk for MongoDB:  
-    `gcloud compute disks create "mongo-data" --size "200" --zone "europe-west1-a" --type "pd-standard"`
+    `gcloud compute disks create "mongo-data" --size "200GB" --zone "europe-west1-a" --type "pd-standard"`
 
 11. Create a compute engine instance using the startup.sh script (replace 'iloveq42' with your bucket name):  
     `gcloud compute instances create "meteor" --zone "europe-west1-a" --tags "http-server" --scopes storage-ro --metadata startup-script-url=gs://iloveq42/startup.sh --disk "name=mongo-data" "mode=rw" "boot=no"`
