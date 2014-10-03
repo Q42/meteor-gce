@@ -25,7 +25,7 @@ Install scripts to run Meteor on Google Compute Engine.
    `gsutil cp startup.sh gs://iloveq42`
 
 8. Bundle your Meteor app into the parent directory:  
-   `meteor build ..`
+   `meteor build .. --architecture os.linux.x86_64`
 
 9. Copy your app to your bucket (replace 'iloveq42' with your bucket name):  
    `gsutil cp ../<YOUR_APP_NAME>.tar.gz gs://iloveq42/versions/default.tar.gz`
