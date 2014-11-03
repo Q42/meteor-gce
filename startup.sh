@@ -18,7 +18,7 @@ curl -sL https://deb.nodesource.com/setup | bash -
 
 # Install packages
 apt-get install -y mongodb-10gen nodejs nginx
-npm install -g forever userdown
+npm install -g --unsafe-perm pm2
 
 
 # Mount mongo-data disk and configure MongoDB to use it
@@ -46,12 +46,12 @@ echo 'server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $http_host;
- 
+
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forward-Proto http;
         proxy_set_header X-Nginx-Proxy true;
- 
+
         proxy_redirect off;
     }
 }
@@ -71,5 +71,4 @@ cd bundle
 export MONGO_URL='mongodb://localhost'
 export ROOT_URL='http://localhost'
 export PORT=3000
-forever -c userdown --minUptime 2000 --spinSleepTime 1000 main.js
-
+pm2 start main.js --name 'meteor-project'
