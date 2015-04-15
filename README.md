@@ -1,8 +1,25 @@
 # Meteor on Google Compute Engine
 Install scripts to run Meteor on Google Compute Engine.
 
+## Option 1: using MUP
+1. create instance via cloud.google.com/console, or commandline: `gcloud compute --project "my-meteor-project" instances create "meteor-vm" --zone "europe-west1-d" --machine-type "n1-standard-1" --network "default" --address 104.155.35.68 --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_only" "https://www.googleapis.com/auth/logging.write" --tags "http-server" "https-server" --image "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1404-trusty-v20150316" --boot-disk-type "pd-standard" --boot-disk-device-name "meteor-vm"`
+2. In the "SSH Keys" section of your VM in Google Cloud, add the contents of `~/.ssh/id_rsa.pub` from your local machine (you can also do this commandline). Note the name of this SSH key.
+3. Install MUP on your local machine: `npm install -g mup`
+4. In your project directory, run `mup init`, this creates 2 files
+5. in mup.json, edit the following:
+  - servers.host = ip adress of your VM
+  - servers.username = name of the used SSH key
+  - comment the "servers.password" field
+  - uncomment the "servers.pem" field
+  - app = location of the file on disk (for current directory, use `'.'`)
+  - env.ROOT_URL = url to your site
+  - env.PORT = `80`
+  - env.MONGO_URL = `'mongodb://localhost'`
+6. run `mup setup`
+7. run `mup deploy`
 
-## Usage
+
+## Option 2: manually 
 1. Create a new project on GCE:  
    https://console.developers.google.com/
 
@@ -42,3 +59,5 @@ This will output something like this:
     meteor europe-west1-d n1-standard-1 10.240.134.93 130.211.62.68 RUNNING
 
 Done! At this point your site should be reachable on the external IP (http://130.211.62.68 in this case).
+
+
