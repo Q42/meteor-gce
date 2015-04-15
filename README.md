@@ -2,11 +2,20 @@
 Install scripts to run Meteor on Google Compute Engine.
 
 ## Option 1: using MUP
-1. create instance via http://cloud.google.com/console, or commandline: `gcloud compute --project "my-meteor-project" instances create "meteor-vm" --zone "europe-west1-d" --machine-type "n1-standard-1" --network "default" --address 104.155.35.68 --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_only" "https://www.googleapis.com/auth/logging.write" --tags "http-server" "https-server" --image "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1404-trusty-v20150316" --boot-disk-type "pd-standard" --boot-disk-device-name "meteor-vm"`
+This is a fast solution, but doesn't work on Windows yet :(. It uses Meteor UP (https://github.com/arunoda/meteor-up), has SSH Key authentication for GCE, and only works on Ubuntu images.
+
+1. Create a GCE VM instance via:
+  - http://cloud.google.com/console:
+    + create a new project or choose an existing one
+    + in `Compute` - `Compute Engine` - `VM instances` click `New instance`
+    + check `Allow HTTP traffic` and `Allow HTTPS traffic`
+    + MUP only works on Ubuntu. Choose an ubuntu image, preferably the latest LTS (long-term-support) version, currently 1404
+    + use a Static IP address so that you can point your DNS to it
+  - commandline: `gcloud compute --project "my-meteor-project" instances create "meteor-vm" --zone "europe-west1-d" --machine-type "n1-standard-1" --network "default" --address 104.155.35.68 --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_only" "https://www.googleapis.com/auth/logging.write" --tags "http-server" "https-server" --image "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1404-trusty-v20150316" --boot-disk-type "pd-standard" --boot-disk-device-name "meteor-vm"`
 2. In the "SSH Keys" section of your VM in Google Cloud, add the contents of `~/.ssh/id_rsa.pub` from your local machine (you can also do this commandline). Note the name of this SSH key.
 3. Install MUP on your local machine: `npm install -g mup`
 4. In your project directory, run `mup init`, this creates mup.json and settings.json
-5. in mup.json, edit the following:
+5. In mup.json, edit the following:
   - servers.host = ip adress of your VM
   - servers.username = name of the used SSH key
   - comment the "servers.password" field
@@ -15,8 +24,8 @@ Install scripts to run Meteor on Google Compute Engine.
   - env.ROOT_URL = url to your site, like `'http://mydomain.com'`
   - env.PORT = `80`
   - env.MONGO_URL = `'mongodb://localhost'`
-6. run `mup setup`
-7. run `mup deploy`
+6. Run `mup setup`
+7. Run `mup deploy`
 
 
 ## Option 2: manually 
