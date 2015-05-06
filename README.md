@@ -4,6 +4,8 @@ Install scripts to run Meteor on Google Compute Engine.
 ## Option 1: using MUP
 This is a fast solution, but doesn't work on Windows yet :(. It uses Meteor UP (https://github.com/arunoda/meteor-up), has SSH Key authentication for GCE, and only works on Ubuntu images.
 
+Issues with this one: you can't attach a persistent disk so if it crashes you lose your data. You can fix this by using a hosted mongodb solution.
+
 1. Create a GCE VM instance via:
   - http://cloud.google.com/console:
     + create a new project or choose an existing one
@@ -20,6 +22,7 @@ This is a fast solution, but doesn't work on Windows yet :(. It uses Meteor UP (
   - servers.username = name of the used SSH key
   - comment the "servers.password" field
   - uncomment the "servers.pem" field
+  - "nodeVersion": "0.10.36"
   - app = location of the file on disk (for current directory, use `'.'`)
   - env.ROOT_URL = url to your site, like `'http://mydomain.com'`
   - env.PORT = `80`
