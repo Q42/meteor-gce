@@ -12,13 +12,17 @@ Install scripts to run Meteor on Google Compute Engine.
 ## Local installation
 Install PM2 meteor on your local machine.
 
-1. ```npm i -g pm2-meteor ```
+```
+npm i -g pm2-meteor
+```
 
 ### Generate settings file (optional)
 PM2-meteor requires a settings file with some required parameters. If you're checking out an exiting project using PM2, this will not be an issue. If you're starting from scratch, you can use the command below to generate a new settings file.
 
-2. ```cd [My Meteor Project]```
-3. ```pm2-meteor --settings meteor-settings.json```
+```
+cd [My Meteor Project]
+pm2-meteor --settings meteor-settings.json
+```
 
 ## Server installation
 
@@ -32,22 +36,20 @@ sudo npm install pm2 -g
 
 For safe deployments and when you want to give access to multiple developers, you will need to create and give specific rights to one user inside the server. 
 
-1. SSH into the VM instance with your Google Cloud login.
-2. Create a user for the deploy and which will start the PM2 instance. 
-   __The user created here should be the same as the one in your settings file on your local machine.__
-   As an example, this will create the user __pm2-meteor__.
+SSH into the VM instance with your Google Cloud login.
+Create a user for the deploy and which will start the PM2 instance. __The user created here should be the same as the one in your settings file on your local machine.__ As an example, this will create the user __pm2-meteor__.
 
 ```
 useradd pm2-meteor
 ```
    
-3. Add your (and anyone else that needs access) public SSH key to this user manually.
+Add your (and anyone else that needs access) public SSH key to this user manually.
 
 ```
 [Your public SSH key] >> /home/pm2-meteor/.ssh/authorized_keys
 ```
    
-4. Give the new user permission to read, write and execute inside the deployment folder. The default folder used by PM2 is the /opt folder, therefore as an example, here is how you set the right permissions to this folder.
+Give the new user permission to read, write and execute inside the deployment folder. The default folder used by PM2 is the /opt folder, therefore as an example, here is how you set the right permissions to this folder.
 
 ```
 chown -R pm2-meteor:pm2-meteor /opt
