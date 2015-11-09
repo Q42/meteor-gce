@@ -10,6 +10,8 @@ Install scripts to run Meteor on Google Compute Engine.
 3. Create a new VM instance and while creating check the boxes __Allow HTTP trafic__ and __Allow HTTPS trafic__ under Firewall.
 
 ## Local installation
+Install PM2 meteor on your local machine.
+
 1. ```npm i -g pm2-meteor ```
 
 ### Generate settings file (optional)
@@ -34,17 +36,22 @@ For safe deployments and when you want to give access to multiple developers, yo
 2. Create a user for the deploy and which will start the PM2 instance. 
    __The user created here should be the same as the one in your settings file on your local machine.__
    As an example, this will create the user __pm2-meteor__.
-   ```
-   useradd pm2-meteor
-   ```
+
+```
+useradd pm2-meteor
+```
+   
 3. Add your (and anyone else that needs access) public SSH key to this user manually.
-   ```
-   [Your public SSH key] >> /home/pm2-meteor/.ssh/authorized_keys
-   ```
+
+```
+[Your public SSH key] >> /home/pm2-meteor/.ssh/authorized_keys
+```
+   
 4. Give the new user permission to read, write and execute inside the deployment folder. The default folder used by PM2 is the /opt folder, therefore as an example, here is how you set the right permissions to this folder.
-   ```
-   chown -R pm2-meteor:pm2-meteor /opt
-   ```
+
+```
+chown -R pm2-meteor:pm2-meteor /opt
+```
 
 ### Nginx
 ```
