@@ -7,7 +7,7 @@ Install scripts to run Meteor on Google Compute Engine.
 
 2. Add your __public__ ssh key to *Metadata -> SSH Keys*. A great explanation on how to generate SSH keys on your local machine and copy them to your clipboard can be found  [here](https://help.github.com/articles/generating-ssh-keys/).
 
-3. Create a new VM instance and while creating check the boxes __Allow HTTP trafic__ and __Allow HTTPS trafic__ under Firewall.
+3. Create a new VM instance and while creating check the boxes __Allow HTTP trafic__ and __Allow HTTPS trafic__ under Firewall. Ubuntu is preferred because it's package management is more up-to-date.
 
 ## Local installation
 Install PM2 meteor on your local machine.
@@ -33,6 +33,8 @@ sudo apt-get install -y nodejs
 sudo npm install pm2 -g
 ```
 ### User rights management
+
+*is this the best way?*
 
 For safe deployments and when you want to give access to multiple developers, you will need to create and give specific rights to one user inside the server. 
 
