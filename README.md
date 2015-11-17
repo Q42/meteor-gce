@@ -93,4 +93,10 @@ __Remember to set the proxy_pass to the address on port on which PM2 will run__
 sudo service nginx restart
 ```
 
+## Deploy your app
+1. In the same location you keep your __pm2-meteor.json__ file, run pm2-meteor deploy
+2. When finished, [install path]/bundle/programs/server an dru npm install
+3. After that, run pm2-meteor start from the same location as step 1
+4. Check if the server runs correctly by stype pm2-meteor status
+
 Afterwards your app should be available at: someapp.q42.nl.
