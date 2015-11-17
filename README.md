@@ -94,6 +94,9 @@ sudo service nginx restart
 ```
 
 ## Deploy your app
+See:
+[PM2 quick-start](http://pm2.keymetrics.io/docs/usage/quick-start/)
+
 1. In the same location you keep your __pm2-meteor.json__ file, run pm2-meteor deploy
 2. When finished, [install path]/bundle/programs/server an dru npm install
 3. After that, run pm2-meteor start from the same location as step 1
