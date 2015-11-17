@@ -13,7 +13,7 @@ PM2-meteor requires a settings file with some required parameters. If you're che
 
 ```
 cd [My Meteor Project]
-pm2-meteor --settings meteor-settings.json
+pm2-meteor init
 ```
 
 ## Server setup
