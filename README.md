@@ -1,14 +1,6 @@
 # Meteor on Google Compute Engine using PM2
 Install scripts to run Meteor on Google Compute Engine.
 
-## Server setup
-1. Create a new project on GCE:  
-   [https://console.cloud.google.com/](https://console.cloud.google.com)
-
-2. Add your __public__ ssh key to *Metadata -> SSH Keys*. A great explanation on how to generate SSH keys on your local machine and copy them to your clipboard can be found  [here](https://help.github.com/articles/generating-ssh-keys/).
-
-3. Create a new VM instance and while creating check the boxes __Allow HTTP trafic__ and __Allow HTTPS trafic__ under Firewall. Ubuntu is preferred because it's package management is more up-to-date.
-
 ## Local installation
 Install PM2 meteor on your local machine.
 
@@ -24,7 +16,19 @@ cd [My Meteor Project]
 pm2-meteor --settings meteor-settings.json
 ```
 
+## Server setup
+1. Create a new project on GCE:  
+   [https://console.cloud.google.com/](https://console.cloud.google.com)
+
+2. Add your __public__ ssh key to *Metadata -> SSH Keys*. A great explanation on how to generate SSH keys on your local machine and copy them to your clipboard can be found  [here](https://help.github.com/articles/generating-ssh-keys/).
+
+3. Create a new VM instance:
+ - Zone:  Europe
+ - Boot disk: Ubuntu latest (because it's package management is more up-to-date)
+ - Check the boxes __Allow HTTP trafic__ and __Allow HTTPS trafic__ under Firewall.
+
 ## Server installation
+Make an ssh connection to the server
 
 ### Node.js / PM2
 ```  
@@ -63,11 +67,15 @@ sudo apt-get update
 sudo apt-get install nginx
 ```
 
-Create a config file for nginx containing your application information. Here is an example config file:
+Create a config file for nginx containing your application information. Here is an example config file you can add to: /etc/nginx/sites-enabled/default
 ```
 server {
  server_name someapp.q42.nl;
  listen 80;
+ 
+ gzip on;
+ gzip_types      text/html text/plain;
+ gzip_min_length 1000;
 
  location / {
    proxy_set_header X-Real-IP $remote_addr;
