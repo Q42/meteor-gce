@@ -1,10 +1,3 @@
-# !: 17-11-'15: Meteor PM2 only supports cluster mode and PM2 on the server doesn't support clustermode on Node 0.10.40, so don't use this for now.
-See:
-
-[meteor PM2](https://www.npmjs.com/package/pm2-meteor#check-out-pm2-here-http-pm2-keymetrics-io)
-
-[PM2](http://pm2.keymetrics.io/docs/usage/cluster-mode/#node-0-10-x-cluster-mode)
-
 # Meteor on Google Compute Engine using PM2
 Install scripts to run Meteor on Google Compute Engine.
 
@@ -22,6 +15,10 @@ PM2-meteor requires a settings file with some required parameters. If you're che
 cd [My Meteor Project]
 pm2-meteor init
 ```
+
+**!** make sure you to use **fork_mode** as exec_mode. *cluster_mode* will give weird errors since PM2 on the server doesn't support clustermode on Node 0.10.40 (which is the version Meteor is using atm).
+
+See: [PM2 and clustermode](http://pm2.keymetrics.io/docs/usage/cluster-mode/#node-0-10-x-cluster-mode)
 
 ## Server setup
 1. Create a new project on GCE:  
