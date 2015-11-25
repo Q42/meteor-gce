@@ -16,8 +16,7 @@ cd [My Meteor Project]
 pm2-meteor init
 ```
 
-**!** make sure you to use **fork_mode** as exec_mode. *cluster_mode* will give weird errors since PM2 on the server doesn't support clustermode on Node 0.10.40 (which is the version Meteor is using atm).
-
+**!** make sure you to use **fork_mode** as exec_mode. *cluster_mode* will give weird errors since PM2 on the server doesn't support clustermode on Node 0.10.40 (which is the version Meteor is using atm).    
 See: [PM2 and clustermode](http://pm2.keymetrics.io/docs/usage/cluster-mode/#node-0-10-x-cluster-mode)
 
 ## Server setup
@@ -82,17 +81,23 @@ server {
  gzip_min_length 1000;
 
  location / {
+  # Remember to set the proxy_pass to the address on port on which PM2 will run
+   proxy_pass http://127.0.0.1:3000;
+   proxy_set_header Host $http_host;
+   proxy_set_header Upgrade $http_upgrade;
+   proxy_set_header Connection "upgrade";
    proxy_set_header X-Real-IP $remote_addr;
    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-   proxy_set_header Host $http_host;
    proxy_set_header X-NginX-Proxy true;
-   proxy_pass http://127.0.0.1:3000;
    proxy_redirect off;
  }
 }
 ```
-__Remember to set the proxy_pass to the address on port on which PM2 will run__
 
+NGINX supports WebSocket by allowing a tunnel to be set up between a client and a back-end server. For NGINX to send the Upgrade request from the client to the back-end server, the Upgrade and Connection headers must be set explicitly. See example above.   
+See: [NGINX as a WebSocket Proxy](https://www.nginx.com/blog/websocket-nginx/#gs.nJb6AXU)
+
+And after each change to your nginx config don't forget to:
 ```
 sudo service nginx restart
 ```
