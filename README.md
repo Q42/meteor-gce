@@ -46,22 +46,25 @@ sudo npm install pm2 -g
 For safe deployments and when you want to give access to multiple developers, you will need to create and give specific rights to one user inside the server. 
 
 SSH into the VM instance with your Google Cloud login.
-Create a user for the deploy and which will start the PM2 instance. __The user created here should be the same as the one in your settings file on your local machine.__ As an example, this will create the user __pm2-meteor__.
+Create a user for the deploy and which will start the PM2 instance. __The user created here should be the same as the one in your settings file on your local machine.__ As an example, this will create the user __pm2-meteor__, and log in as that user.
 
 ```
-useradd pm2-meteor
+sudo useradd -d /home/pm2-meteor -m pm2-meteor
+sudo passwd pm2-meteor
 ```
    
 Add your (and anyone else that needs access) public SSH key to this user manually.
 
 ```
-[Your public SSH key] >> /home/pm2-meteor/.ssh/authorized_keys
+sudo mkdir /home/pm2-meteor/.ssh
+sudo nano /home/pm2-meteor/.ssh/authorized_keys
+<paste your ssh.pub file>
 ```
    
 Give the new user permission to read, write and execute inside the deployment folder. The default folder used by PM2 is the /opt folder, therefore as an example, here is how you set the right permissions to this folder.
 
 ```
-chown -R pm2-meteor:pm2-meteor /opt
+sudo chown -R pm2-meteor:pm2-meteor /opt
 ```
 
 ### Nginx
@@ -106,9 +109,7 @@ sudo service nginx restart
 See:
 [PM2 quick-start](http://pm2.keymetrics.io/docs/usage/quick-start/)
 
-1. In the same location you keep your __pm2-meteor.json__ file, run pm2-meteor deploy
-2. When finished, [install path]/bundle/programs/server an dru npm install
-3. After that, run pm2-meteor start from the same location as step 1
-4. Check if the server runs correctly by stype pm2-meteor status
+1. In the same location you keep your __pm2-meteor.json__ file, run `pm2-meteor deploy`
+2. Check if the server runs correctly by typing `pm2-meteor status`
 
 Afterwards your app should be available at: someapp.q42.nl.
