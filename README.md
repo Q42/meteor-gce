@@ -75,16 +75,29 @@ sudo apt-get install nginx
 
 Create a config file for nginx containing your application information. Here is an example config file you can add to: /etc/nginx/sites-enabled/default
 ```
+#force redirect http to https
+server {
+ listen 80;
+ server_name 127.0.0.1;
+ rewrite ^ https://$http_host$request_uri? permanent;
+}
+
+#proxy SSL requests to your meteor app on port 3000
 server {
  server_name someapp.q42.nl;
- listen 80;
+ listen 443 ssl;
+ 
+ ssl on;
+ ssl_certificate /usr/local/nginx/conf/ssl_cert/example.crt;
+ ssl_certificate_key /usr/local/nginx/conf/ssl_cert/example.key;
+ ssl_session_timeout 10m;
  
  gzip on;
  gzip_types      text/html text/plain;
  gzip_min_length 1000;
 
  location / {
-  # Remember to set the proxy_pass to the address on port on which PM2 will run
+   # Remember to set the proxy_pass to the address on port on which PM2 will run
    proxy_pass http://127.0.0.1:3000;
    proxy_set_header Host $http_host;
    proxy_set_header Upgrade $http_upgrade;
