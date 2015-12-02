@@ -23,7 +23,7 @@ See: [PM2 and clustermode](http://pm2.keymetrics.io/docs/usage/cluster-mode/#nod
 1. Create a new project on GCE:  
    [https://console.cloud.google.com/](https://console.cloud.google.com)
 
-2. Add your __public__ ssh key to *Metadata -> SSH Keys*. A great explanation on how to generate SSH keys on your local machine and copy them to your clipboard can be found  [here](https://help.github.com/articles/generating-ssh-keys/).
+2. Add your __public__ ssh key to *Metadata -> SSH Keys*. A great explanation on how to generate SSH keys on your local machine and copy them to your clipboard can be found [here](https://help.github.com/articles/generating-ssh-keys/).
 
 3. Create a new VM instance:
  - Zone:  Europe
@@ -43,7 +43,7 @@ sudo npm install pm2 -g
 
 *is this the best way?*
 
-For safe deployments and when you want to give access to multiple developers, you will need to create and give specific rights to one user inside the server. 
+For safe deployments and when you want to give access to multiple developers, you will need to create and give specific rights to one user inside the server.
 
 SSH into the VM instance with your Google Cloud login.
 Create a user for the deploy and which will start the PM2 instance. __The user created here should be the same as the one in your settings file on your local machine.__ As an example, this will create the user __pm2-meteor__, and log in as that user.
@@ -52,7 +52,7 @@ Create a user for the deploy and which will start the PM2 instance. __The user c
 sudo useradd -d /home/pm2-meteor -m pm2-meteor
 sudo passwd pm2-meteor
 ```
-   
+
 Add your (and anyone else that needs access) public SSH key to this user manually.
 
 ```
@@ -60,7 +60,7 @@ sudo mkdir /home/pm2-meteor/.ssh
 sudo nano /home/pm2-meteor/.ssh/authorized_keys
 <paste your ssh.pub file>
 ```
-   
+
 Give the new user permission to read, write and execute inside the deployment folder. The default folder used by PM2 is the /opt folder, therefore as an example, here is how you set the right permissions to this folder.
 
 ```
@@ -86,14 +86,14 @@ server {
 server {
  server_name someapp.q42.nl;
  listen 443 ssl;
- 
+
  ssl on;
  ssl_certificate /usr/local/nginx/conf/ssl_cert/example.crt;
  ssl_certificate_key /usr/local/nginx/conf/ssl_cert/example.key;
  ssl_session_timeout 10m;
- 
+
  gzip on;
- gzip_types      text/html text/plain;
+ gzip_types text/plain;
  gzip_min_length 1000;
 
  location / {
