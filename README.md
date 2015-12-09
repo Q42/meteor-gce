@@ -23,7 +23,7 @@ Issues with this one: you can't attach a persistent disk so if it crashes you lo
   - servers.username = name of the used SSH key
   - comment the "servers.password" field
   - uncomment the "servers.pem" field
-  - "nodeVersion": "4.2.3"
+  - "nodeVersion": "0.10.40"
   - app = location of the file on disk (for current directory, use `'.'`)
   - env.ROOT_URL = url to your site, like `'http://mydomain.com'`
   - env.PORT = `80`
