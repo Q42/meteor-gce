@@ -14,9 +14,10 @@ Issues with this one: you can't attach a persistent disk so if it crashes you lo
     + MUP only works on Ubuntu. Choose an ubuntu image, preferably the latest LTS (long-term-support) version, currently 1404
     + use a Static IP address so that you can point your DNS to it
   - commandline: `gcloud compute --project "my-meteor-project" instances create "meteor-vm" --zone "europe-west1-d" --machine-type "n1-standard-1" --network "default" --address 104.155.35.68 --maintenance-policy "MIGRATE" --scopes "https://www.googleapis.com/auth/devstorage.read_only" "https://www.googleapis.com/auth/logging.write" --tags "http-server" "https-server" --image "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1404-trusty-v20150316" --boot-disk-type "pd-standard" --boot-disk-device-name "meteor-vm"`
-2. In the "SSH Keys" section of your VM in Google Cloud, add the contents of `~/.ssh/id_rsa.pub` from your local machine (you can also do this commandline). Note the name of this SSH key.
+2. Add your SSH key and user to the VM by either clicking the SSH button at the top of the VM instance detail page or you can follow [these instructions](https://cloud.google.com/compute/docs/instances/connecting-to-instance#standardssh). You may close the console that opened once it's done with your key.
 3. Install MUP on your local machine: `npm install -g mup`
-4. In your project directory, run `mup init`, this creates mup.json and settings.json
+4. In your project directory, run `mup init`, this creates mup.json and settings.json 
+  * Note: if you're adding mup to an existing project that already contains a settings.json file, you will see a __A Project Already Exists__ message. If this happens, you can either manually create a mup.json or rename your settings and then init. The settings.json file created by mup doesn't contain anything interesting, so you can just delete it afterwards and re-rename your settings.json back to it's original name.
 5. In mup.json, edit the following:
   - servers.host = ip adress of your VM
   - servers.username = name of the used SSH key
