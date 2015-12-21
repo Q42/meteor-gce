@@ -91,6 +91,7 @@ server {
  ssl_certificate /usr/local/nginx/conf/ssl_cert/example.crt;
  ssl_certificate_key /usr/local/nginx/conf/ssl_cert/example.key;
  ssl_session_timeout 10m;
+ ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 
  gzip on;
  gzip_types text/plain;
